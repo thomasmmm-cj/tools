@@ -1,0 +1,25 @@
+{
+  "zipCodes": [
+    "98006",
+    "98004",
+    "98007",
+    "98052",
+    "98101"
+  ],
+  "product": "ACT",
+  "roomType": "BYOD REGULAR",
+  "seatAvailability": "ALL",
+  "standby": "false",
+  "availabilityModes": [
+    {
+      "key": "byod_regular",
+      "roomType": "BYOD REGULAR",
+      "standby": "false"
+    },
+    {
+      "key": "regular_standby",
+      "roomType": "REGULAR",
+      "standby": "true"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+.DS_Store
+
+# Local runtimes and installed dependencies
+node_modules/
+.venv/
+__pycache__/
+
+# Persistent browser profile contains authenticated session data
+browser-profile/
+
+# Generated crawl and availability output
+data/

@@ -1,0 +1,13 @@
+{
+  "name": "act-center-watcher",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "login": "node watcher.mjs --login",
+    "check": "node watcher.mjs",
+    "availability": "node check_availability.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0"
+  }
+}
