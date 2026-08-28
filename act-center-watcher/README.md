@@ -34,7 +34,8 @@ npm run availability
 ```
 
 The availability command reads the unique `center_code` column from
-`data/centers-wa-simple.csv` and sends one authenticated request per code:
+`data/centers-wa-simple.csv` and sends two authenticated requests per code:
+one for BYOD regular seats and one for the standby check:
 
 ```text
 /api/test-scheduling/ACTNational/test-centers
@@ -46,7 +47,8 @@ The availability command reads the unique `center_code` column from
 ```
 
 It writes `data/availability.json` and waits two seconds between requests by
-default. Use another CSV with:
+default. Standby results are retained in the raw availability data but are
+never counted in `availableSlots`. Use another CSV with:
 
 ```bash
 npm run availability -- \
@@ -93,7 +95,7 @@ Create `~/Library/LaunchAgents/com.local.act-center-watcher.plist`, replacing
     <string>/usr/bin/env</string>
     <string>npm</string>
     <string>run</string>
-    <string>check</string>
+    <string>availability</string>
   </array>
   <key>WorkingDirectory</key>
   <string>/ABSOLUTE/PATH</string>
@@ -161,16 +163,17 @@ python crawl_centers_simple.py \
   --output data/centers-wa-simple.json
 ```
 
-This version waits two seconds between ZIP requests by default, saves one raw
-JSON response per ZIP, and writes a deduplicated CSV keyed by ACT's `tc_id`.
+This version waits a randomized 1–6 seconds between ZIP requests by default,
+saves one raw JSON response per ZIP, and writes a deduplicated CSV keyed by
+ACT's `tc_id`.
 The endpoint's `tc_id` is the locator's internal test-center ID, not the
 official registration center code displayed after expanding a locator result.
 For each deduplicated `tc_id`, it then calls
 `TestSchedulingDates.json?tc_id=...&product=ACT` once and attaches that raw
 response to the JSON output. The second response supplies the official
 `tc_code`; the CSV contains one row per center/date with `test_date`,
-`start_time`, and `schedule_status`. Increase the delay with `--delay 5` if
-desired.
+`start_time`, and `schedule_status`. To use a different delay range, pass
+`--min-delay` and `--max-delay`, for example `--min-delay 3 --max-delay 8`.
 
 To crawl Washington broadly, generate a postal ZIP list first:
 
