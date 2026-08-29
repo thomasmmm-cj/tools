@@ -113,7 +113,7 @@ function toNumber(value) {
   return Number.isFinite(number) ? number : null;
 }
 
-function summarizeAvailability(payload, standby = "false") {
+function summarizeAvailability(payload) {
   const resources = Array.isArray(payload)
     ? payload
     : payload?.response?.data?.resource_list ?? [];
@@ -138,8 +138,7 @@ function summarizeAvailability(payload, standby = "false") {
         assign_count: assigned,
         capacity,
         seats_remaining: location.location_type === "STANDBY" ? 0 : seatsRemaining,
-        available: standby !== "true" &&
-          location.location_type !== "STANDBY" &&
+        available: location.location_type !== "STANDBY" &&
           seatsRemaining !== null &&
           seatsRemaining > 0
       };
@@ -271,7 +270,7 @@ async function collectAvailability(page, rows, config, modes, label = "combined"
         room_type: mode.roomType,
         standby: mode.standby,
         response: responsePayload,
-        summary: summarizeAvailability(responsePayload, mode.standby)
+        summary: summarizeAvailability(responsePayload)
       };
       completedRequests += 1;
       const availableCount = availability[siteListingCode].checks[mode.key].summary

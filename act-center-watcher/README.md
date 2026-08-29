@@ -47,8 +47,9 @@ one for BYOD regular seats and one for the standby check:
 ```
 
 It writes `data/availability.json` and waits two seconds between requests by
-default. Standby results are retained in the raw availability data but are
-never counted in `availableSlots`. Use another CSV with:
+default. The separate `STANDBY` location rows are retained in the raw
+availability data but are never counted in `availableSlots`; regular seats
+reported alongside them can still be counted. Use another CSV with:
 
 ```bash
 npm run availability -- \
