@@ -1,0 +1,5 @@
+.DS_Store
+
+# Xcode-generated per-user files
+**/xcuserdata/
+DerivedData/
